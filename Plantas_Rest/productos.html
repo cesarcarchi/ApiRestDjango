@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html ng-app='myApp'>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Productos</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Theme CSS -->
+    <link href="css/clean-blog.min.css" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+    <link href="vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular.min.js"></script>
+    <!--Controllers-->
+    <script type="text/javascript" src="controllers/testController.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.12.1/ui-bootstrap.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.12.1/ui-bootstrap-tpls.js"></script>
+    <!-- <link href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.1/css/bootstrap.min.css" rel="stylesheet"> -->
+    
+    <script src="https://maps.google.com/maps/api/js?key=AIzaSyA2HR57Zmj49uy8pQihJPCPTg7sp1AC578"></script>
+    <script src="https://rawgit.com/allenhwkim/angularjs-google-maps/master/build/scripts/ng-map.js"></script>
+ 
+    <!--Services-->
+    <script type="text/javascript" src="services/testService.js"></script>
+</head>
+
+
+<body ng-app="myApp" ng-controller="testController">
+    <!-- Navigation -->
+    <nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header page-scroll">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    Menu <i class="fa fa-bars"></i>
+                </button>
+                <a class="navbar-brand" href="index.html">Django Rest</a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="index.html">Home</a>
+                    </li>
+                    <li>
+                        <a href="plantas.html">Plantas</a>
+                    </li>
+                    <li>
+                        <a href="parteusada.html">Parte Usada</a>
+                    </li>
+                    <li>
+                        <a href="elevacion.html">Elevacion</a>
+                    </li>
+                    <li>
+                        <a href="productos.html">Productos</a>
+                    </li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
+
+    <!-- Page Header -->
+    <!-- Set your background image for this header on the line below. -->
+    <header class="intro-header" style="background-image: url('img/home-bg.jpg')">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <div class="site-heading">
+                        <h1>DjAngular</h1>
+                        <hr class="small">
+                        <span class="subheading">Plantas del Ecuador</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <hr>
+    <!-- Main Content -->
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <ul class="nav nav-tabs nav-stacked">
+                         <button id="p1" type="button" class="btn btn-primary btn-block" value="Mostrar" onclick="mostrar()">Buscar un producto</button>
+                         <button id="p2" type="button" class="btn btn-primary btn-block" value="Mostrar"  ng-click="getAllProductos()" onclick="mostrar()">Listar todos los productos</button>
+                         <button id="p3" type="button" class="btn btn-primary btn-block" value="Mostrar" onclick="mostrar1()">Crear un producto</button>
+                         <button id="p4" type="button" class="btn btn-primary btn-block" value="Mostrar" onclick="mostrar2()">Actualizar un producto</button>
+                         <button id="p5" type="button" class="btn btn-primary btn-block" value="Mostrar" onclick="mostrar3()">Borrar un producto</button>
+                    </ul>
+                  
+
+
+                <!-- LISTAR -->
+                <div class="post-preview" id="1planta" style='display:none;'>
+                    <br><br>
+                    <div class="input-group">
+                        <span class="input-group-addon" id="basic-addon1">Ingrese el producto a buscar</span>
+                        <input type="number" min="0" class="form-control" ng-model="post_idproductos" placeholder="Id producto" aria-describedby="basic-addon1">
+                        
+                    </div>
+                    <input style="float: right;" type="submit" value="Id Listar" ng-click="selectProductos()"/>
+                    
+                    <br><br>
+                </div>
+
+                <!-- CREATE -->
+                <div class="post-preview" id="cplanta" style='display:none;'>
+                    <br><br>
+                    <div class="input-group">
+                        <hr/>
+                          <form novalidate class="simple-form">
+                            <label>idproducto: <input type="number" ng-model="a.idproductos" /></label><br />
+                            <label>nombre_producto: <input type="text" ng-model="a.nombre_productos" /></label><br />
+                            <input type="button" ng-click="reset()" value="Reset" />
+                            <input type="submit" ng-click="createProductos(user)" value="Save" />
+                            <h4>{{mensaje}}</h4>
+                          </form>
+                        
+                    </div>
+                    
+                    <br><br>
+                </div>
+
+                <!-- UPDATE -->
+
+                <div class="post-preview" id="uplanta" style='display:none;'>
+                    <br><br>
+                    <div class="input-group">
+                        <hr/>
+                        <p>Actualizar:</p><br>
+                        <form novalidate class="simple-form">
+                            <label>idproducto: <input type="number" ng-model="b.idproductos" /></label><br />
+                            <label>nombre_producto: <input type="text" ng-model="b.nombre_productos" /></label><br />
+                            <input type="button" ng-click="reset()" value="Reset" />
+                            <input type="submit" ng-click="updateProductos()" value="Save" />
+                            <h4>{{mensaje}}</h4>
+                        </form>
+                        
+                    </div>
+                    <input style="float: right;" type="submit" value="Id Listar" ng-click="getInstitucion()"/>
+                    
+                    <br><br>
+                </div>
+
+
+                <!-- DELETE -->
+                <div class="post-preview" id="dplanta" style='display:none;'>
+                    <br><br>
+                    <div class="input-group">
+                        <form novalidate class="simple-form">
+                            <fieldset>
+                                <legend align="left"><font color="red"> Borrar Producto </font></legend>
+                                
+                                <input type="number" min="0" ng-model="id_post" placeholder="Borrar Producto"/>
+                                <input type="submit" ng-click="deleteProductos()" value="Borrar" />
+                                <h4>{{mensaje}}</h4>
+                            </fieldset>
+                        </form>
+                    </div>
+                    
+                    <br><br>
+                </div>
+
+                <script type="text/javascript">
+                    function mostrar(){
+                        document.getElementById('1planta').style.display = 'block';
+                        document.getElementById('uplanta').style.display = 'none';
+                        document.getElementById('dplanta').style.display = 'none';
+                        document.getElementById('cplanta').style.display = 'none';
+
+                        document.getElementById('p1').style.display = 'none';
+                        document.getElementById('p2').style.display = 'block';
+                        document.getElementById('p3').style.display = 'block';
+                        document.getElementById('p4').style.display = 'block';
+                        document.getElementById('p5').style.display = 'block';
+
+                    }
+                    function mostrar1(){
+                        document.getElementById('1planta').style.display = 'none';
+                        document.getElementById('uplanta').style.display = 'none';
+                        document.getElementById('dplanta').style.display = 'none';
+                        document.getElementById('cplanta').style.display = 'block';
+
+                        document.getElementById('p1').style.display = 'block';
+                        document.getElementById('p2').style.display = 'block';
+                        document.getElementById('p3').style.display = 'none';
+                        document.getElementById('p4').style.display = 'block';
+                        document.getElementById('p5').style.display = 'block';
+                    }
+                    function mostrar2(){
+                        document.getElementById('1planta').style.display = 'none';
+                        document.getElementById('uplanta').style.display = 'block';
+                        document.getElementById('dplanta').style.display = 'none';
+                        document.getElementById('cplanta').style.display = 'none';
+
+                        document.getElementById('p1').style.display = 'block';
+                        document.getElementById('p2').style.display = 'block';
+                        document.getElementById('p3').style.display = 'block';
+                        document.getElementById('p4').style.display = 'none';
+                        document.getElementById('p5').style.display = 'block';
+
+                    }
+                    function mostrar3(){
+                        document.getElementById('1planta').style.display = 'none';
+                        document.getElementById('uplanta').style.display = 'none';
+                        document.getElementById('dplanta').style.display = 'block';
+                        document.getElementById('cplanta').style.display = 'none';
+
+                        document.getElementById('p1').style.display = 'block';
+                        document.getElementById('p2').style.display = 'block';
+                        document.getElementById('p3').style.display = 'block';
+                        document.getElementById('p4').style.display = 'block';
+                        document.getElementById('p5').style.display = 'none';
+                    }
+                </script>
+
+                <script type="text/javascript">
+                    function formReset(){
+                        document.getElementById("myForm").reset();
+                    }
+                </script>
+                <hr/>
+                <div ng-if="posts.exist==1">
+                    <h1>Lista de Plantas</h1>
+                    <div ng-repeat="p in posts">
+                        <pre>
+                            <h5> Id # {{p.idproductos}}</h5>
+                            <h2>{{p.nombre_productos}}</h2>
+                            <p>{{p}}</p>
+                        </pre>
+                        <hr/>
+                    </div>
+                </div>
+                <div ng-if="unPost.exist==1">
+                    <h1> Obteniendo el producto seleccionado </h1>
+                    <pre>
+                        <h5> Id # {{unPost.idproductos}}</h5>
+                        <h2>{{unPost.nombre_productos}}</h2>
+                        <p>{{unPost}}</p>
+                    </pre>
+                    <hr/>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+
+    <hr>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <ul class="list-inline text-center">
+                        <li>
+                            <a href="https://www.twitter.com/csarcarchi">
+                                <span class="fa-stack fa-lg">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://www.facebook.com/cesaraugusto.carchiludena">
+                                <span class="fa-stack fa-lg">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://github.com/cesarcarchi">
+                                <span class="fa-stack fa-lg">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </a>
+                        </li>
+                    </ul>
+                    <p class="copyright text-muted">Copyright &copy; Django & Angular - César Carchi - UTPL - 2017</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- jQuery -->
+    <script src="vendor/jquery/jquery.min.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+
+    <!-- Contact Form JavaScript -->
+    <script src="js/jqBootstrapValidation.js"></script>
+    <script src="js/contact_me.js"></script>
+
+    <!-- Theme JavaScript -->
+    <script src="js/clean-blog.min.js"></script>
+
+</body>
+</html>
